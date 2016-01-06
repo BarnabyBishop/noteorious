@@ -1,10 +1,26 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED, SET_MULTILINE } from '../constants/ActionTypes';
 
 const initialState = [{
-    text: 'Use Redux',
-    completed: false,
-    id: 0
-}];
+        text: 'autosize',
+        completed: true,
+        id: 0
+    },{
+        text: 'Create next note after in multiline',
+        completed: true,
+        id: 1,
+        multiline: true,
+        height: 36
+    },{
+        text: 'Create new list',
+        completed: false,
+        id: 2
+    },{
+        text: 'Give me some CSS',
+        completed: true,
+        id: 3
+    }];
+
+
 
 export default function todos(state = initialState, action) {
     switch (action.type) {
@@ -26,7 +42,7 @@ export default function todos(state = initialState, action) {
         const editedState = state.map((todo, index) => {
                 if (todo.id === action.id) {
                         currentIndex = index;
-                        return Object.assign({}, todo, { text: action.text, height: action.height });
+                        return Object.assign({}, todo, { text: action.text, height: action.height, autoFocus: false });
                 }
                 else {
                         return todo;
@@ -38,7 +54,8 @@ export default function todos(state = initialState, action) {
                 id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
                 completed: false,
                 multiline: false,
-                text: ''
+                text: '',
+                autoFocus: true
             });
         }
         return editedState;

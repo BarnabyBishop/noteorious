@@ -15,11 +15,7 @@ class TodoItem extends Component {
     }
 
     handleSave(id, text, createNext, height) {
-        if (text.length === 0) {
-            this.props.deleteTodo(id);
-        } else {
-            this.props.editTodo(id, text, createNext, height);
-        }
+        this.props.editTodo(id, text, createNext, height);
         this.setState({ editing: false });
     }
 
@@ -40,6 +36,7 @@ class TodoItem extends Component {
                         text={todo.text}
                         height={todo.height}
                         multiline={todo.multiline}
+                        autoFocus={todo.autoFocus}
                         editing={this.state.editing}
                         onSave={(text, createNext, height) => this.handleSave(todo.id, text, createNext, height)}
                         setMultiline={(multiline) => this.props.setMultiline(todo.id, multiline)} />

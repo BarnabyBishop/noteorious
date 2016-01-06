@@ -1,0 +1,10 @@
+.todo {
+    border-radius: 4px;
+    border: solid 1px #ccc;
+    padding: 7px;
+    font-size: 14px;
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.10);
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.10);
+    width: 200px;
+}

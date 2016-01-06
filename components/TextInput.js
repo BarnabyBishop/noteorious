@@ -8,50 +8,57 @@ class TextInput extends Component {
 
     handleSubmit(e) {
         const text = e.target.value.trim();
-        if (!this.props.multiline && e.which === 13) {
+        if (e.which === 13) {
             if (e.shiftKey) {
-                // Set multiline to true
-                this.props.setMultiline(true);
+                if (!this.props.multiline) {
+                    this.props.setMultiline(true);
+                }
+                else {
+                    e.preventDefault();
+                    this.props.onSave(text, true, this.props.height);
+                }
             }
             else {
-                // Otherwise the new textarea will start with a newline
-                e.preventDefault();
+                if (!this.props.multiline) {
+                    e.preventDefault();
+                    this.props.onSave(text, true, this.props.height);
+                }
             }
-            this.props.onSave(text, !e.shiftKey);
         }
 
     }
 
     handleChange(e) {
         const input = e.target;
-        const originalHeight = input.style.height;
+
+        const style = window.getComputedStyle(input, null);
+        const heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth) - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+
+
+        const originalHeight = style.height;
 
         input.style.height = 'auto';
-        const endHeight = input.scrollHeight +  + 'px';
+        const endHeight = input.scrollHeight + heightOffset;
         input.style.height = originalHeight;
 
         this.props.onSave(e.target.value, false, endHeight);
     }
 
-    handleBlur(e) {
-        if (!this.props.newTodo) {
-            this.props.onSave(e.target.value);
-        }
-    }
-
     render() {
-        const style = { height: this.props.height + 'px' };
+        let style = {};
+        if (this.props.height) {
+            style = { height: this.props.height + 'px' };
+        }
         return (
             <textarea className={
                 classnames({
                     edit: this.props.editing,
-                    'new-todo': this.props.newTodo
+                    'todo': 'todo'
                 })}
                 type="text"
                 placeholder={this.props.placeholder}
-                autoFocus="true"
+                autoFocus={this.props.autoFocus}
                 value={this.props.text}
-                onBlur={this.handleBlur.bind(this)}
                 onChange={this.handleChange.bind(this)}
                 onKeyDown={this.handleSubmit.bind(this)}
                 style={style}
@@ -66,6 +73,7 @@ TextInput.propTypes = {
     height: PropTypes.number,
     placeholder: PropTypes.string,
     editing: PropTypes.bool,
+    autoFocus: PropTypes.bool,
     newTodo: PropTypes.bool
 };
 
