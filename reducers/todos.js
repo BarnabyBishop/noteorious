@@ -18,9 +18,7 @@ const initialState = [{
         text: 'Give me some CSS',
         completed: true,
         id: 3
-    }];
-
-
+}];
 
 export default function todos(state = initialState, action) {
     switch (action.type) {

@@ -74,7 +74,7 @@ TextInput.propTypes = {
     placeholder: PropTypes.string,
     editing: PropTypes.bool,
     autoFocus: PropTypes.bool,
-    newTodo: PropTypes.bool
+    newText: PropTypes.bool
 };
 
 export default TextInput;
